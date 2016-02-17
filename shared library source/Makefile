@@ -58,13 +58,15 @@ ifeq ($(TARGET_PLATFORM), OSX64)
 	CFLAGS = -fPIC -m64 -stdlib=libc++ -O3 -Wl,-install_name,$(PROG)$(VER)
 endif
 
+PROG = lib$(LIBRARY_NAME).so
+CC = g++
 SRCS = preprocessor.cpp gcode.cpp vector.cpp
-CFLAGS += -Wall -std=c++11 -fvisibility=hidden -shared
+CFLAGS = -O3 -fPIC -Wall -std=c++11 -fvisibility=hidden -shared
 
 all: $(PROG)
 
 $(PROG):   $(SRCS)
-	$(CC) $(CFLAGS) -o ../octoprint_m3dfio/static/libraries/$(PROG) $(SRCS)
+	$(CC) $(CFLAGS) -o $(PROG) $(SRCS)
 
 clean:
 	rm -f ../octoprint_m3dfio/static/libraries/$(PROG)
