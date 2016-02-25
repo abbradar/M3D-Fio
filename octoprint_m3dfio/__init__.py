@@ -3793,7 +3793,7 @@ class M3DFioPlugin(
 								connection = serial.Serial(currentPort, currentBaudrate)
 								break
 							
-							except OSError :
+							except (OSError, WindowsError) :
 								time.sleep(1)
 						
 						# Check if connecting to printer failed
@@ -7287,7 +7287,7 @@ class M3DFioPlugin(
 				break
 
 			# If printer has just power-cycled it may not yet be ready
-			except OSError :
+			except (OSError, WindowsError) :
 				time.sleep(1)
 		
 		# Check if connecting to printer failed
