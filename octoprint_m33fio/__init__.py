@@ -1061,71 +1061,8 @@ class M33FioPlugin(
 		# Check if using shared library or checking if it is usable
 		if self._settings.get_boolean(["UseSharedLibrary"]) or isUsable :
 	
-			# Check if running on Linux
-			if platform.uname()[0].startswith("Linux") :
-
-				# Check if running on a Raspberry Pi 1
-				if platform.uname()[4].startswith("armv6l") and self.getCpuHardware() == "BCM2708" :
-	
-					# Set shared library
-					self.sharedLibrary = ctypes.cdll.LoadLibrary(self._basefolder.replace('\\', '/') + "/static/libraries/preprocessor_arm1176jzf-s.so")
-	
-				# Otherwise check if running on a Raspberry Pi 2 or Raspberry Pi 3
-				elif platform.uname()[4].startswith("armv7l") and self.getCpuHardware() == "BCM2709" :
-	
-					# Set shared library
-					self.sharedLibrary = ctypes.cdll.LoadLibrary(self._basefolder.replace('\\', '/') + "/static/libraries/preprocessor_arm_cortex-a7.so")
-	
-				# Otherwise check if running on an ARM7 device
-				elif platform.uname()[4].startswith("armv7") :
-	
-					# Set shared library
-					self.sharedLibrary = ctypes.cdll.LoadLibrary(self._basefolder.replace('\\', '/') + "/static/libraries/preprocessor_arm7.so")
-	
-				# Otherwise check if using an i386 or x86-64 device
-				elif platform.uname()[4].endswith("86") or platform.uname()[4].endswith("64") :
-
-					# Check if Python is running as 32-bit
-					if platform.architecture()[0].startswith("32") :
-		
-						# Set shared library
-						self.sharedLibrary = ctypes.cdll.LoadLibrary(self._basefolder.replace('\\', '/') + "/static/libraries/preprocessor_i386.so")
-	
-					# Otherwise check if Python is running as 64-bit
-					elif platform.architecture()[0].startswith("64") :
-		
-						# Set shared library
-						self.sharedLibrary = ctypes.cdll.LoadLibrary(self._basefolder.replace('\\', '/') + "/static/libraries/preprocessor_x86-64.so")
-
-			# Otherwise check if running on Windows and using an i386 or x86-64 device
-			elif platform.uname()[0].startswith("Windows") and (platform.uname()[4].endswith("86") or platform.uname()[4].endswith("64")) :
-
-				# Check if Python is running as 32-bit
-				if platform.architecture()[0].startswith("32") :
-	
-					# Set shared library
-					self.sharedLibrary = ctypes.cdll.LoadLibrary(self._basefolder.replace('\\', '/') + "/static/libraries/preprocessor_i386.dll")
-
-				# Otherwise check if Python is running as 64-bit
-				elif platform.architecture()[0].startswith("64") :
-	
-					# Set shared library
-					self.sharedLibrary = ctypes.cdll.LoadLibrary(self._basefolder.replace('\\', '/') + "/static/libraries/preprocessor_x86-64.dll")
-
-			# Otherwise check if running on OS X and using an i386 or x86-64 device
-			elif platform.uname()[0].startswith("Darwin") and (platform.uname()[4].endswith("86") or platform.uname()[4].endswith("64")) :
-
-				# Check if Python is running as 32-bit
-				if platform.architecture()[0].startswith("32") :
-	
-					# Set shared library
-					self.sharedLibrary = ctypes.cdll.LoadLibrary(self._basefolder.replace('\\', '/') + "/static/libraries/preprocessor_i386.dylib")
-
-				# Otherwise check if Python is running as 64-bit
-				elif platform.architecture()[0].startswith("64") :
-	
-					# Set shared library
-					self.sharedLibrary = ctypes.cdll.LoadLibrary(self._basefolder.replace('\\', '/') + "/static/libraries/preprocessor_x86-64.dylib")
+                        # Set shared library
+                        self.sharedLibrary = ctypes.cdll.LoadLibrary(self._basefolder.replace('\\', '/') + "/static/libraries/libpreprocessor.so")
 
 			# Check if shared library was set
 			if self.sharedLibrary :
